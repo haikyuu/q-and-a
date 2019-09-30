@@ -4,8 +4,8 @@ let idCounter = 0;
 
 export default {
   state: {
-    ids: [],
-    map: {}
+    ids: [0],
+    map: { 0: { question: "What's your name?", answer: "Abdellah" } }
   },
   reducers: {
     createQuestion(state, question) {
@@ -39,12 +39,12 @@ export default {
         map
       };
     },
-    deleteQuestions(state){
+    deleteQuestions(state) {
       return {
         ...state,
         ids: [],
         map: {}
-      }
+      };
     }
   },
   effects: dispatch => ({
