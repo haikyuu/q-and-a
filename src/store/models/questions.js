@@ -5,7 +5,7 @@ let idCounter = 0;
 export default {
   state: {
     ids: [0],
-    map: { 0: { question: "What's your name?", answer: "Abdellah" } }
+    map: { 0: { question: "What's your name?", answer: "Abdellah", id: 0 } }
   },
   reducers: {
     createQuestion(state, question) {
@@ -16,7 +16,7 @@ export default {
         ids: [...state.ids, id],
         map: {
           ...state.map,
-          [id]: question
+          [id]: { ...question, id }
         }
       };
     },
