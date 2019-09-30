@@ -38,6 +38,13 @@ export default {
         ids: state.ids.filter(storeId => storeId !== id),
         map
       };
+    },
+    deleteQuestions(state){
+      return {
+        ...state,
+        ids: [],
+        map: {}
+      }
     }
   },
   effects: dispatch => ({
