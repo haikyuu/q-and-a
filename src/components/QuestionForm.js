@@ -22,59 +22,77 @@ export default function QuestionForm({
   };
   return (
     <div className="question-form__container">
-      <div className="input-group">
-        <label htmlFor="question">Question</label>
-        <input
-          type="text"
-          name="question"
-          value={question}
-          onChange={event => {
-            const { value } = event.target;
-            setQuestion(value);
-          }}
-        />
+      <div className="field">
+        <label className="label" htmlFor="question">
+          Question
+        </label>
+        <div className="control">
+          <input
+            type="text"
+            id="question"
+            className="input"
+            value={question}
+            onChange={event => {
+              const { value } = event.target;
+              setQuestion(value);
+            }}
+          />
+        </div>{" "}
       </div>
-      <div className="input-group">
-        <label htmlFor="answer">Answer</label>
-        <input
-          type="text"
-          name="answer"
-          value={answer}
-          onChange={event => {
-            const { value } = event.target;
-            setAnswer(value);
-          }}
-        />
+      <div className="field">
+        <label className="label" htmlFor="answer">
+          Answer
+        </label>
+        <div className="control">
+          <input
+            type="text"
+            id="answer"
+            className="input"
+            value={answer}
+            onChange={event => {
+              const { value } = event.target;
+              setAnswer(value);
+            }}
+          />
+        </div>{" "}
       </div>
       <div className="button__container">
         {isEdit ? (
           <Fragment>
-            <button onClick={onCancelClick}>Cancel</button>
+            <button className="button" onClick={onCancelClick}>
+              Cancel
+            </button>
 
             <button
-              onClick={() =>
-                {
-                editQuestion({ id: editedQuestion.id, question, answer })
-                onCancelClick()
-                }}
+              className="button is-primary"
+              onClick={() => {
+                editQuestion({ id: editedQuestion.id, question, answer });
+                onCancelClick();
+              }}
             >
               Edit Question
             </button>
           </Fragment>
         ) : (
           <Fragment>
-            <input
-              type="checkbox"
-              name="delayed"
-              value={delayed}
-              onChange={event => {
-                const { checked } = event.target;
-                setDelayed(checked);
-              }}
-            />
-            <label htmlFor="delayed">Delay with 5 seconds</label>
-
+            <div className="field">
+              <div className="control">
+                <label className="checkbox" htmlFor="delayed">
+                  <input
+                    type="checkbox"
+                    id="delayed"
+                    value={delayed}
+                    onChange={event => {
+                      const { checked } = event.target;
+                      setDelayed(checked);
+                    }}
+                  />
+                  Delay with 5 seconds
+                </label>
+              </div>
+            </div>
             <button
+              className="button is-primary"
               onClick={async () => {
                 const newQuestion = { question, answer };
                 clearInputs();
