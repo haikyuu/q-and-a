@@ -15,6 +15,11 @@ function App() {
   return (
     <div className="app">
       <Header title="Created Questions" purpose="Here, you can find created questions and their answers"/>
+      {questionIds.length === 0 && (
+        <div>
+          <span>No questions yet :-(</span>
+        </div>
+      )}
       {questionIds.map(id=>(
         <Question question={map[id]} key={id} />
       ))}        
