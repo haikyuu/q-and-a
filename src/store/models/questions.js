@@ -48,7 +48,7 @@ export default {
     }
   },
   effects: dispatch => ({
-    async createDelayedQuestion({ delay, question }) {
+    async createDelayedQuestion({ delay = 5000, question }) {
       await new Promise(resolve => setTimeout(resolve, delay));
       dispatch.questions.createQuestion(question);
     }

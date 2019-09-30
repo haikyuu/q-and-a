@@ -4,9 +4,15 @@ import { useDispatch } from "react-redux";
 export default function QuestionForm() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [delayed, setDelayed] = useState(false);
 
-  const { questions: { createQuestion } } = useDispatch();
-
+  const {
+    questions: { createQuestion, createDelayedQuestion }
+  } = useDispatch();
+  const clearInputs = () => {
+    setQuestion("")
+    setAnswer("")
+  }
   return (
     <div className="question-form__container">
       <div className="input-group">
@@ -34,7 +40,27 @@ export default function QuestionForm() {
         />
       </div>
       <div className="button__container">
-        <button onClick={() => createQuestion({ question, answer })}>
+        <input
+          type="checkbox"
+          name="delayed"
+          value={delayed}
+          onChange={event => {
+            const { checked } = event.target;
+            setDelayed(checked);
+          }}
+        />
+        <label htmlFor="delayed">Delay with 5 seconds</label>
+        <button
+          onClick={async () => {
+            const newQuestion = { question, answer };
+              clearInputs()
+            if (delayed) {
+              await createDelayedQuestion({ question: newQuestion });
+            } else {
+              createQuestion(newQuestion);
+            }
+          }}
+        >
           Create Question
         </button>
       </div>
