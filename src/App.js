@@ -1,24 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useSelector, useDispatch } from 'react-redux'
+import Header from './components/Header' 
+import Question from './components/Question' 
+import QuestionForm from './components/QuestionForm' 
 
 function App() {
+  const { ids, map } = useSelector(state=> state.questions)
+  const { questions: { deleteQuestions } } = useDispatch()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header title="Created Questions" purpose="Here, you can find created questions and their answers"/>
+      {ids.map(id=>(
+        <Question question={map[id]} key={id} />
+      ))}        
+      <Header title="Create a new question" purpose="Here, you can create new questions and their answers" />
+      <QuestionForm />
+      <button onClick={deleteQuestions}>Remove Questions</button>
     </div>
   );
 }
