@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { useDispatch } from "react-redux";
 
-export default function QuestionForm() {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+export default function QuestionForm({
+  isEdit,
+  editedQuestion,
+  onDeleteClick,
+  onCancelClick
+}) {
+  const [question, setQuestion] = useState(
+    isEdit ? editedQuestion.question : ""
+  );
+  const [answer, setAnswer] = useState(isEdit ? editedQuestion.answer : "");
   const [delayed, setDelayed] = useState(false);
 
   const {
-    questions: { createQuestion, createDelayedQuestion }
+    questions: { createQuestion, createDelayedQuestion, editQuestion }
   } = useDispatch();
   const clearInputs = () => {
-    setQuestion("")
-    setAnswer("")
-  }
+    setQuestion("");
+    setAnswer("");
+  };
   return (
     <div className="question-form__container">
       <div className="input-group">
@@ -40,29 +47,48 @@ export default function QuestionForm() {
         />
       </div>
       <div className="button__container">
-        <input
-          type="checkbox"
-          name="delayed"
-          value={delayed}
-          onChange={event => {
-            const { checked } = event.target;
-            setDelayed(checked);
-          }}
-        />
-        <label htmlFor="delayed">Delay with 5 seconds</label>
-        <button
-          onClick={async () => {
-            const newQuestion = { question, answer };
-              clearInputs()
-            if (delayed) {
-              await createDelayedQuestion({ question: newQuestion });
-            } else {
-              createQuestion(newQuestion);
-            }
-          }}
-        >
-          Create Question
-        </button>
+        {isEdit ? (
+          <Fragment>
+            <button onClick={onCancelClick}>Cancel</button>
+
+            <button
+              onClick={() =>
+                {
+                editQuestion({ id: editedQuestion.id, question, answer })
+                onCancelClick()
+                }}
+            >
+              Edit Question
+            </button>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <input
+              type="checkbox"
+              name="delayed"
+              value={delayed}
+              onChange={event => {
+                const { checked } = event.target;
+                setDelayed(checked);
+              }}
+            />
+            <label htmlFor="delayed">Delay with 5 seconds</label>
+
+            <button
+              onClick={async () => {
+                const newQuestion = { question, answer };
+                clearInputs();
+                if (delayed) {
+                  await createDelayedQuestion({ question: newQuestion });
+                } else {
+                  createQuestion(newQuestion);
+                }
+              }}
+            >
+              Create Question
+            </button>
+          </Fragment>
+        )}
       </div>
     </div>
   );
