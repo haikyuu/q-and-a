@@ -1,3 +1,65 @@
 .cursor-pointer{
   cursor: pointer;
 }
+
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip__item {
+  position: absolute;
+  min-width: 260px;
+  padding: 8px 15px;
+  visibility: hidden;
+  opacity: 0;
+  background: black;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.25s cubic-bezier(0, 0, 0.2, 1);
+  color: #fff;
+  border: 1px solid #cecece;
+  border-radius: 15px;
+  font-weight: 500;
+  z-index: 4;
+}
+
+
+
+.tooltip__initiator {
+  cursor: pointer;
+  z-index: 5;
+}
+
+.tooltip .tooltip__initiator:hover~.tooltip__item {
+  transform: translate3d(-29%, 0, 0);
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip .tooltip__item {
+  top: calc(100% + 1em);
+  left: 53%;
+  transform: translate3d(-29%, -15px, 0);
+}
+
+.tooltip .tooltip__item:after {
+  /* This is the arrow on top of the tooltip*/
+  /* We are using a little trick that consists of 
+        - creating an element after the initiator with 0 width and height
+	- applying borders to this element (when you do that, each side of the border is a triangle 😵 four sides -> rectangle)
+	- make three sides transparent and you've got a triangle
+*/
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+
+  top: -0.5em;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  border-width: 0 0.5em 0.5em 0.5em;
+  border-color: transparent transparent black transparent;
+  filter: drop-shadow(1px -1px 1px #bcbcbc);
+}
