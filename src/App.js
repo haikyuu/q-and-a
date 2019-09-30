@@ -22,10 +22,8 @@ function App() {
           purpose="Here, you can find created questions and their answers"
         />
         {questionIds.length === 0 && (
-<article class="message is-info">
-  <div class="message-body">
-    No questions yet :-(
-  </div>
+          <article class="message is-info">
+            <div class="message-body">No questions yet :-(</div>
           </article>
         )}
         {questionIds.map(id => <Question question={map[id]} key={id} />)}

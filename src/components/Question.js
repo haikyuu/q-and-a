@@ -21,8 +21,15 @@ export default function Question({ question }) {
         />
       ) : (
         <Fragment>
-          <h4 className="title is-4 cursor-pointer" onClick={()=> setShouldDisplayAnswer(!shouldDisplayAnswer)}>{question.question} </h4>
-          {shouldDisplayAnswer && (<span className="subtitle is-4">{question.answer}</span>)}
+          <h4
+            className="title is-4 cursor-pointer"
+            onClick={() => setShouldDisplayAnswer(!shouldDisplayAnswer)}
+          >
+            {question.question}{" "}
+          </h4>
+          {shouldDisplayAnswer && (
+            <span className="subtitle is-4">{question.answer}</span>
+          )}
           <br />
           <button className="button is-danger is-small" onClick={onDeleteClick}>
             Delete
